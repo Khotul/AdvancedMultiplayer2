@@ -3657,13 +3657,17 @@ procedures:
       // fire one bullet
       if (GetPlayer()->m_bSniping) {
         FireSniperBullet(FLOAT3D(0.0f, 0.0f, 0.0f), 1500.0f, GetInventory()->GetDamage(WEAPON_SNIPER), 0.0f);
+        //damage was 300 i set to 500, cause alt has 450 for some reason and still kinda sucks ass
+        DecAmmo(m_iSniperBullets, 4);
       } else {
-        FireSniperBullet(FirePos(WEAPON_SNIPER), 1000.0f, GetInventory()->GetDamage(WEAPON_SNIPER) / 4.0f, 5.0f);
+        FireSniperBullet(FirePos(WEAPON_SNIPER), 1000.0f, GetInventory()->GetDamage(WEAPON_SNIPER) / 6.0f, 2.25f); //spraed decreased from 5f to 2.5f
+        //was divided by 4 but well we'ere making "main"" fire automatic
+        DecAmmo(m_iSniperBullets, 1);
       }
       GetPlayer()->m_tmLastSniperFire = _pTimer->CurrentTick();
 
       SpawnRangeSound(50.0f);
-      DecAmmo(FALSE);
+      //DecAmmo(FALSE);
 
       if (!GetPlayer()->m_bSniping) {
         SetFlare(TRUE);
@@ -3684,16 +3688,29 @@ procedures:
       if (GetAttackAnim(m_iAnim, m_fAnimWaitTime, FALSE)) {
         m_moWeapon.PlayAnim(m_iAnim, 0);
       }
+
+      if (m_bSniping) {
+        autowait(AdjustAttackSpeed(1.0f));
+      }
+	  else if (TRUE) {
+		autowait(AdjustAttackSpeed(0.1f));
+	  }
       
       // [Cecil] Multiply speed
-      autowait(AdjustAttackSpeed(1.0f));
+      //autowait(AdjustAttackSpeed(1.0f));
 
       // [Cecil] Drop bullet
       DropBulletShell(_vSniperShellPos, FLOAT3D(FRnd()+2.0f, FRnd()+5.0f, -FRnd()-2.0f), ESL_BULLET);
       SpawnBubbleEffect(_vSniperShellPos, FLOAT3D(0.3f, 0.0f, 0.0f));
       
       // [Cecil] Multiply speed
-      autowait(AdjustAttackSpeed(0.35f));
+      //autowait(AdjustAttackSpeed(0.35f));
+      if (m_bSniping) {
+        autowait(AdjustAttackSpeed(0.35f));
+      }
+      else if (TRUE) {
+		autowait(0.02f);
+      }
       
       // no ammo -> change weapon
       if (!ENOUGH_AMMO) {

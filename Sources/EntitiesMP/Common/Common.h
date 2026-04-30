@@ -35,14 +35,14 @@
 #define PLACT_SELECT_WEAPON_MASK  (0x1FL << PLACT_SELECT_WEAPON_SHIFT)
 
 // Max ammo
-#define MAX_BULLETS       INDEX(500)
-#define MAX_SHELLS        INDEX(100)
-#define MAX_ROCKETS       INDEX(50)
-#define MAX_GRENADES      INDEX(50)
-#define MAX_NAPALM        INDEX(500)
-#define MAX_ELECTRICITY   INDEX(400)
+#define MAX_BULLETS       INDEX(999)
+#define MAX_SHELLS        INDEX(200)
+#define MAX_ROCKETS       INDEX(100)
+#define MAX_GRENADES      INDEX(125)
+#define MAX_NAPALM        INDEX(2000)
+#define MAX_ELECTRICITY   INDEX(800)
 #define MAX_IRONBALLS     INDEX(30)
-#define MAX_SNIPERBULLETS INDEX(50)
+#define MAX_SNIPERBULLETS INDEX(175)
 
 // Bit shifters for ammo
 #define AMMO_BULLETS       0

@@ -1341,9 +1341,10 @@ void PlayerLaserRay(void) {
   }
   SetModelMainTexture(TEXTURE_GREEN_LASER);
   // start moving
-  LaunchAsPropelledProjectile(FLOAT3D(0.0f, 0.0f, -120.0f), (CMovableEntity*)(CEntity*)m_penLauncher);
+  //3rd argument is velocity i believe? -120 is 120 forward i guess, robots have 60 so maybe set it to 70 idk
+  LaunchAsPropelledProjectile(FLOAT3D(0.0f, 0.0f, -80.0f), (CMovableEntity*)(CEntity*)m_penLauncher);
   SetDesiredRotation(ANGLE3D(0.0f, 0.0f, 0.0f));
-  m_fFlyTime = 3.0f;
+  m_fFlyTime = 6.0f; //was 3.0, idk if thats timeout time or something, since we're nearly halving the speed lets decrease the flytime too
 
   // [Cecil] Multiply damage
   m_fDamageAmount = 20.0f * FireSpeed();

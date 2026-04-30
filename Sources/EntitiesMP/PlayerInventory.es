@@ -47,10 +47,10 @@ extern CTString _strCurrentWeaponSet;
 
 // Max powerup times
 static const FLOAT _afPowerupMaxTime[PLAYER_POWERUPS] = {
-  30.0f,
-  30.0f,
-  40.0f,
-  20.0f,
+  60.0f,
+  60.0f,
+  90.0f,
+  66.0f,
   0.0f, // unused
 };
 
@@ -1254,7 +1254,7 @@ functions:
 
   // Activate some powerup
   void ActivatePowerup(INDEX iPowerup) {
-    (&m_tmInvis)[iPowerup] = _pTimer->CurrentTick() + GetPowerupMaxTime(iPowerup) * GetSP()->sp_fPowerupTimeMul;
+    (&m_tmInvis)[iPowerup] = _pTimer->CurrentTick() + (GetPowerupMaxTime(iPowerup)/2) * GetSP()->sp_fPowerupTimeMul;
   };
 
   // Check if a powerup is active
