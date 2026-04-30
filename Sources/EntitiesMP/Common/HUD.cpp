@@ -1244,7 +1244,7 @@ extern void DrawHUD( const CPlayer *penPlayerCurrent, CDrawPort *pdpCurrent, BOO
     hud_iSortPlayers = Clamp( hud_iSortPlayers, -1L, 6L);
     SortKeys eKey = (SortKeys)hud_iSortPlayers;
     if (hud_iSortPlayers==-1) {
-           if (bCooperative) eKey = PSK_HEALTH;
+      if (bCooperative) eKey = PSK_SCORE; //PSK_HEALTH;
       else if (bScoreMatch)  eKey = PSK_SCORE;
       else if (bFragMatch)   eKey = PSK_FRAGS;
       else { ASSERT(FALSE);  eKey = PSK_NAME; }
@@ -1289,8 +1289,11 @@ extern void DrawHUD( const CPlayer *penPlayerCurrent, CDrawPort *pdpCurrent, BOO
         if( bCooperative) { 
           _pDP->PutTextR(strName,   _pixDPWidth-12*fCharWidth, fCharHeight*i+fOneUnit*4, colScore |_ulAlphaHUD);
           _pDP->PutText("/",        _pixDPWidth- 6*fCharWidth, fCharHeight*i+fOneUnit*4, _colHUD  |_ulAlphaHUD);
-          _pDP->PutTextC(strHealth, _pixDPWidth- 9*fCharWidth, fCharHeight*i+fOneUnit*4, colHealth|_ulAlphaHUD);
-          _pDP->PutTextC(strArmor,  _pixDPWidth- 3*fCharWidth, fCharHeight*i+fOneUnit*4, colArmor |_ulAlphaHUD);
+          _pDP->PutTextC(strHealth, _pixDPWidth- 3*fCharWidth, fCharHeight*i+fOneUnit*4, colHealth|_ulAlphaHUD);
+          _pDP->PutTextC(strScore, _pixDPWidth - 9 * fCharWidth, fCharHeight * i + fOneUnit * 4, colScore | _ulAlphaHUD);
+          //todo: truncate score to make it more readable? ex. 12345 -> 12.3k
+          _pDP->PutTextC(strDeaths, _pixDPWidth - 2 * fCharWidth, fCharHeight* i + fOneUnit * 4, colDeaths | _ulAlphaHUD);
+          //_pDP->PutTextC(strArmor,  _pixDPWidth- 3*fCharWidth, fCharHeight*i+fOneUnit*4, colArmor |_ulAlphaHUD);
         } else if( bScoreMatch) { 
           _pDP->PutTextR(strName,  _pixDPWidth-12*fCharWidth, fCharHeight*i+fOneUnit*4, _colHUD |_ulAlphaHUD);
           _pDP->PutText("/",       _pixDPWidth- 6*fCharWidth, fCharHeight*i+fOneUnit*4, _colHUD |_ulAlphaHUD);

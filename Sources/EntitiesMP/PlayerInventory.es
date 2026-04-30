@@ -1073,7 +1073,8 @@ functions:
           }
 
           // [Cecil] Print the type
-          CTString &strPick = m_aAmmo[i].pasAmmoStruct->strPickup;
+          //missing TRANS here
+          CTString &strPick = m_aAmmo[i].pasAmmoStruct->strPickup; // this is address idk if i can just wrap this in TRANS, i wont bother then
           strMessage.PrintF("%s%s %d", strMessage, strPick, aiSet[i-1]);
         }
       }

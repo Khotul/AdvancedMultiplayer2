@@ -6148,6 +6148,11 @@ procedures:
       // increase number of deaths
       m_psLevelStats.ps_iDeaths += 1;
       m_psGameStats.ps_iDeaths += 1;
+
+      //score penalty for dying, repeated deaths in one level more penalizing
+      //todo: should we prevent negative score? also make configurable
+      m_psLevelStats.ps_iScore -= 10000 * m_psLevelStats.ps_iDeaths;
+	  m_psGameStats.ps_iScore -= 10000 * m_psLevelStats.ps_iDeaths;
     // if not in cooperative, and not single player
     } else {
       // print death message
