@@ -840,14 +840,6 @@ functions:
     DecAmmoExact(m_iCurrentWeapon, iDec, bAlt);
   };
 
-  // old function, sohuld be same as DecAmmoExact no?
-  void DecAmmoOld(INDEX &ctAmmo, INDEX iDec = 1)
-  {
-      if (!GetSP()->sp_bInfiniteAmmo) {
-      ctAmmo-=iDec;
-      }
-  }
-
   // [Cecil] Decrease magazine
   void DecMag(BOOL bAmmo) {
     SPlayerWeapon &pw = CURRENT_WEAPON;
@@ -3708,11 +3700,13 @@ procedures:
       if (GetPlayer()->m_bSniping) {
         FireSniperBullet(FLOAT3D(0.0f, 0.0f, 0.0f), 1500.0f, GetInventory()->GetDamage(WEAPON_SNIPER), 0.0f);
         //damage was 300 i set to 500, cause alt has 450 for some reason and still kinda sucks ass
-        DecAmmoOld(m_iSniperBullets, 4);
+        ///DecAmmoOld(m_iSniperBullets, 4);
+          m_iAmmoLeft = ClampUp(GetInventory()->CurrentAmmo(m_iCurrentWeapon), (INDEX)4);
+          DecAmmoExact(m_iCurrentWeapon, m_iAmmoLeft, FALSE);
       } else {
         FireSniperBullet(FirePos(WEAPON_SNIPER), 1000.0f, GetInventory()->GetDamage(WEAPON_SNIPER) / 6.0f, 2.25f); //spraed decreased from 5f to 2.5f
         //was divided by 4 but well we'ere making "main"" fire automatic
-        DecAmmoOld(m_iSniperBullets, 1);
+        DecAmmo(FALSE);
       }
       GetPlayer()->m_tmLastSniperFire = _pTimer->CurrentTick();
 
@@ -3739,7 +3733,7 @@ procedures:
         m_moWeapon.PlayAnim(m_iAnim, 0);
       }
 
-      if (m_bSniping) {
+      if (GetPlayer()->m_bSniping) {
         autowait(AdjustAttackSpeed(1.0f));
       }
 	  else if (TRUE) {
@@ -3755,7 +3749,7 @@ procedures:
       
       // [Cecil] Multiply speed
       //autowait(AdjustAttackSpeed(0.35f));
-      if (m_bSniping) {
+      if (GetPlayer()->m_bSniping) {
         autowait(AdjustAttackSpeed(0.35f));
       }
       else if (TRUE) {

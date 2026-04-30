@@ -29,6 +29,7 @@ static INDEX amp_iDualWeapons = 1;
 static INDEX amp_bAllDualWeapons = FALSE;
 
 static INDEX amp_iAltFire = 0;
+static INDEX amp_bColtAlt = TRUE;
 static INDEX amp_bShotgunAlt   = TRUE;
 static INDEX amp_bDShotgunAlt  = TRUE;
 static INDEX amp_bTommygunAlt  = TRUE;
@@ -123,6 +124,7 @@ static void RestoreDefaultOptions(void) {
   amp_bAllDualWeapons = FALSE;
 
   amp_iAltFire = 0;
+  amp_bColtAlt = TRUE;
   amp_bShotgunAlt   = TRUE;
   amp_bDShotgunAlt  = TRUE;
   amp_bTommygunAlt  = TRUE;
@@ -218,6 +220,7 @@ extern void DeclareExtraSymbols(void) {
   _pShell->DeclareSymbol("persistent user INDEX amp_bAllDualWeapons;", &amp_bAllDualWeapons);
 
   _pShell->DeclareSymbol("persistent user INDEX amp_iAltFire;", &amp_iAltFire);
+  _pShell->DeclareSymbol("persistent user INDEX amp_bColtAlt;", &amp_bColtAlt);
   _pShell->DeclareSymbol("persistent user INDEX amp_bShotgunAlt;", &amp_bShotgunAlt);
   _pShell->DeclareSymbol("persistent user INDEX amp_bDShotgunAlt;", &amp_bDShotgunAlt);
   _pShell->DeclareSymbol("persistent user INDEX amp_bTommygunAlt;", &amp_bTommygunAlt);
@@ -377,7 +380,8 @@ extern void SetAdvancedParameters(CSessionProperties &sp) {
                     | (amp_bNoRocketJump      ? AMP_NOROCKETJUMP : 0);
 
   // weapon alt fire
-  sp.sp_iAltFire = (amp_bShotgunAlt   ? WAF_SHOTGUN : 0)
+  sp.sp_iAltFire = (amp_bColtAlt      ? WAF_COLT : 0)
+                 | (amp_bShotgunAlt   ? WAF_SHOTGUN : 0)
                  | (amp_bDShotgunAlt  ? WAF_DSHOTGUN : 0)
                  | (amp_bTommygunAlt  ? WAF_TOMMYGUN : 0)
                  | (amp_bMinigunAlt   ? WAF_MINIGUN : 0)

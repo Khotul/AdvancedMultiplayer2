@@ -35,6 +35,7 @@
 #define IRF_SPEED  (1 << 17)
 
 // [Cecil] Weapon alt fire flags
+#define WAF_COLT      (1 << 2)
 #define WAF_SHOTGUN   (1 << 3)
 #define WAF_DSHOTGUN  (1 << 4)
 #define WAF_TOMMYGUN  (1 << 5)
