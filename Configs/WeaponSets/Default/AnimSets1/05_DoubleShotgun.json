@@ -1,12 +1,12 @@
 {
   "Draw" : {
     "Anim" : 7,
-    "Time" : 0.4,
+    "Time" : 0.2,
   },
   
   "Holster" : {
     "Anim" : 8,
-    "Time" : 0.25,
+    "Time" : 0.05,
   },
   
   "Idle" : {
@@ -21,7 +21,7 @@
   
   "Attack" : {
     "Anim" : 1,
-    "Time" : 1.75,
+    "Time" : 1.55,
   },
   
   "AttackDM" : {

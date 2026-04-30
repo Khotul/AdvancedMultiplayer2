@@ -3294,7 +3294,7 @@ procedures:
     // fire one shell
     if (ENOUGH_AMMO) {
       GetAnimator()->FireAnimation(0, m_bExtraWeapon);
-      FireBullets(FirePos(WEAPON_SINGLESHOTGUN), 500.0f, GetInventory()->GetDamage(WEAPON_SINGLESHOTGUN), 7, afSingleShotgunPellets, 0.2f, 0.03f, 0.0f);
+      FireBullets(FirePos(WEAPON_SINGLESHOTGUN), 500.0f, GetInventory()->GetDamage(WEAPON_SINGLESHOTGUN), 8, afSingleShotgunPellets, 0.16f, 0.03f, 0.0f);
 
       DoRecoil();
       SpawnRangeSound(60.0f);
@@ -3340,7 +3340,7 @@ procedures:
     // release spring and fire one grenade
     if (ENOUGH_ALT) {
       m_fWeaponDrawPowerOld = 10.0f;
-      m_fWeaponDrawPower = 10.0f;
+      m_fWeaponDrawPower = 10.0f; //was 10f
       m_tmDrawStartTime = 0.0f;
 
       m_moWeapon.PlayAnim(SINGLESHOTGUN_ANIM_WAIT1, AOF_LOOPING);
@@ -3362,8 +3362,8 @@ procedures:
 
         m_fWeaponDrawPowerOld = m_fWeaponDrawPower;
 
-        if (m_fWeaponDrawPower > 0.01f * FireSpeed()) {
-          m_fWeaponDrawPower *= 0.65f * FireSpeedMul();
+        if (m_fWeaponDrawPower > 0.03f * FireSpeed()) {
+          m_fWeaponDrawPower *= 0.25f * FireSpeedMul(); //the lower the faster the weapon will fire agasin
         } else {
           m_fWeaponDrawPower = 0.0f;
         }
@@ -3421,7 +3421,7 @@ procedures:
       SpawnPipeEffect(FLOAT3D(-0.11f, 0.1f, -0.3f), _vDoubleShotgunPipe, FLOAT3D( 0.1f, 0.0f, -0.2f), FLOAT3D( 1, 0.0f, -12.5f), ESL_SHOTGUN_SMOKE);
 
       // [Cecil] Multiply speed
-      autowait(AdjustAttackSpeed(GetSP()->sp_bCooperative ? 0.25f : 0.15f));
+      autowait(AdjustAttackSpeed(GetSP()->sp_bCooperative ? 0.19f : 0.15f));
 
       if (ENOUGH_AMMO) {
         PlaySound(m_soWeapon1, SOUND_DOUBLESHOTGUN_RELOAD, SOF_3D|SOF_VOLUMETRIC);

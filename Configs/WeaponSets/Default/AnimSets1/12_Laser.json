@@ -1,12 +1,12 @@
 {
   "Draw" : {
     "Anim" : 2,
-    "Time" : 0.5,
+    "Time" : 0.2,
   },
   
   "Holster" : {
     "Anim" : 3,
-    "Time" : 0.3,
+    "Time" : 0.17,
   },
   
   "Idle" : {
