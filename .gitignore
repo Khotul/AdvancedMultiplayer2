@@ -95,3 +95,4 @@ Sounds/*
 Textures/*
 Temp/*
 *.h_tmp
+*.cpp_tmp
