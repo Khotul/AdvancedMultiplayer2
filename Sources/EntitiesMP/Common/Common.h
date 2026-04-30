@@ -38,11 +38,11 @@
 #define MAX_BULLETS       INDEX(999)
 #define MAX_SHELLS        INDEX(200)
 #define MAX_ROCKETS       INDEX(100)
-#define MAX_GRENADES      INDEX(125)
+#define MAX_GRENADES      INDEX(120)
 #define MAX_NAPALM        INDEX(2000)
 #define MAX_ELECTRICITY   INDEX(800)
 #define MAX_IRONBALLS     INDEX(30)
-#define MAX_SNIPERBULLETS INDEX(175)
+#define MAX_SNIPERBULLETS INDEX(200)
 
 // Bit shifters for ammo
 #define AMMO_BULLETS       0

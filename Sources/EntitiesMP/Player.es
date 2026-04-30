@@ -901,6 +901,7 @@ properties:
   ULONG ulReleasedButtons;
 
   BOOL bUseButtonHeld;
+  BOOL bAltZoomHeld;
 
   // listener
   CSoundListener sliSound;
@@ -3916,7 +3917,7 @@ functions:
     CPlayerWeapons *penWeapon = GetWeapon(0);
 
     if (penWeapon->GetCurrent() == WEAPON_SNIPER) {
-      if (bUseButtonHeld && m_ulFlags & PLF_ISZOOMING) {
+      if (bAltZoomHeld && m_ulFlags & PLF_ISZOOMING) { //replace with alt fire button
         m_fLastSniperFOV = m_fSniperFOV;
         m_fSniperFOV -= m_fSnipingZoomSpeed;
 
@@ -3928,7 +3929,7 @@ functions:
         }
       }
 
-      if (ulReleasedButtons & PLACT_USE_HELD) {
+      if (ulReleasedButtons & PLACT_ALTFIRE) {
          m_fLastSniperFOV = m_fSniperFOV;
 
          PlaySound(m_soSniperZoom, SOUND_SILENCE, SOF_3D);
@@ -4317,7 +4318,7 @@ functions:
 
     // [Cecil] TODO: Call PlayerInventory and check if it's only knives selected
     // enable faster moving if holding knife in DM
-    if (GetWeapon(0)->GetCurrent() == WEAPON_KNIFE && !GetSP()->sp_bCooperative) {
+    if (GetWeapon(0)->GetCurrent() == WEAPON_KNIFE) { //&& !GetSP()->sp_bCooperative) {
       vTranslation *= 1.3f;
     }
 
@@ -4908,6 +4909,40 @@ functions:
     // secondary fire on main weapon
     } else if (GetSP()->AltMode() == 2) {
       bExtraFire = TRUE;
+    } else if (GetWeapon(0)->GetCurrent() == WEAPON_SNIPER) {
+        //should only trigger in singular mode i hope
+        if (ulNewButtons & PLACT_ALTFIRE) {
+            bAltZoomHeld = TRUE;
+        }
+
+	    if (ulReleasedButtons & PLACT_ALTFIRE) {
+		    bAltZoomHeld = FALSE;
+	    }
+
+        
+      CPlayerWeapons *penWeapon = GetWeapon(0);
+     
+      // make sure that weapon transition is not in progress
+      if (penWeapon->GetWanted() == WEAPON_SNIPER) {
+        if (m_ulFlags & PLF_ISZOOMING) {
+          m_ulFlags &= ~PLF_ISZOOMING;
+
+          m_bSniping = FALSE;
+          m_fLastSniperFOV = m_fSniperFOV = m_fSniperMaxFOV;
+
+          PlaySound(m_soSniperZoom, SOUND_SILENCE, SOF_3D);
+          if(_pNetwork->IsPlayerLocal(this)) {IFeel_StopEffect("SniperZoom");}
+
+        } else {
+          m_ulFlags |= PLF_ISZOOMING;
+
+          m_bSniping = TRUE;
+          m_fLastSniperFOV = m_fSniperFOV = m_fMinimumZoomFOV;
+
+          PlaySound(m_soSniperZoom, SOUND_SNIPER_ZOOM, SOF_3D|SOF_LOOP);
+          if(_pNetwork->IsPlayerLocal(this)) {IFeel_PlayEffect("SniperZoom");}
+        }
+      }
     }
     
     // [Cecil] Fire main weapon on alt fire button

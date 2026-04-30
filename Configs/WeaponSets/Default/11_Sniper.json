@@ -9,12 +9,12 @@
   "Group" : 6,
   "Dual" : false,
   
-  "Damage" : 500.0,
+  "Damage" : 480.0,
   "DamageDM" : 90.0,
-  "DamageAlt" : 500.0,
+  "DamageAlt" : 480.0,
   "DamageAltDM" : 120.0,
   
-  "Ammo" : 20,
+  "Ammo" : 6,
   "AltAmmo": -1,
   
   "Models" : {
@@ -41,7 +41,7 @@
   "FOV" : 23.0,
   "PosFire" : [0.0, 0.0],
   
-  "PickupAmmo" : 16,
+  "PickupAmmo" : 30,
   "PickupAlt"  : 0,
   "Mana" : 10.0,
 }
