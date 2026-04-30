@@ -1118,7 +1118,7 @@ functions:
 
     switch (iWeapon) {
       // doesn't have alt fire
-      case WEAPON_KNIFE: case WEAPON_CHAINSAW: case WEAPON_COLT:
+      case WEAPON_KNIFE: case WEAPON_CHAINSAW:// case WEAPON_COLT:
         return FALSE;
     }
 

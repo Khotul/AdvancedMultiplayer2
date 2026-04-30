@@ -840,6 +840,14 @@ functions:
     DecAmmoExact(m_iCurrentWeapon, iDec, bAlt);
   };
 
+  // old function, sohuld be same as DecAmmoExact no?
+  void DecAmmoOld(INDEX &ctAmmo, INDEX iDec = 1)
+  {
+      if (!GetSP()->sp_bInfiniteAmmo) {
+      ctAmmo-=iDec;
+      }
+  }
+
   // [Cecil] Decrease magazine
   void DecMag(BOOL bAmmo) {
     SPlayerWeapon &pw = CURRENT_WEAPON;
@@ -3156,6 +3164,7 @@ procedures:
         on (EBegin) : {
           // fire one shot
           switch (m_iCurrentWeapon) {
+            case WEAPON_COLT: call FireColtAlt(); break;
             case WEAPON_SINGLESHOTGUN: call FireShotgunGrenade(); break;
             case WEAPON_DOUBLESHOTGUN: call FirePunchShotgun(); break;
             case WEAPON_TOMMYGUN: call TommygunBurst(); break;
@@ -3257,6 +3266,47 @@ procedures:
     PlayDefaultAnim(FALSE);
 
     // no more bullets in colt -> reload
+    if (!ENOUGH_MAG) {
+      jump ReloadColt();
+    }
+
+    return EEnd();
+  };
+  
+  FireColtAlt() {
+    GetAnimator()->FireAnimation(0, m_bExtraWeapon);
+    
+    //placeholder sound
+    PlaySound(m_soWeapon0, SOUND_MINIGUN_CLICK, SOF_3D|SOF_VOLUMETRIC);
+    autowait(AdjustAttackSpeed(0.55f));
+
+    // Fire bullet
+    FireOneBullet(FirePos(WEAPON_COLT), 500.0f, GetInventory()->GetDamage(WEAPON_COLT) * 5.0f);
+
+    if(_pNetwork->IsPlayerLocal(m_penPlayer)) {IFeel_PlayEffect("Colt_fire");}
+    DoRecoil();
+    SpawnRangeSound(50.0f);
+
+    DecMag(FALSE);
+    DecMag(FALSE);
+    SetFlare(TRUE);
+    PlayLightAnim(LIGHT_ANIM_COLT_SHOTGUN, 0);
+
+    // sound
+    //stealing alt sniper sound cause it's so meaty + idont use that alt anyways
+    PlaySound(m_soWeapon0, SOUND_ACCURATE_SNIPER, SOF_3D|SOF_VOLUMETRIC);
+
+    // [Cecil] Play attack animation
+    if (GetAttackAnim(m_iAnim, m_fAnimWaitTime, FALSE)) {
+      m_moWeapon.PlayAnim(m_iAnim, 0);
+    }
+
+    // [Cecil] Multiply speed
+    autowait(AdjustAttackSpeed(m_fAnimWaitTime - 0.05f));
+
+    PlayDefaultAnim(FALSE);
+
+    // tood: should we force reload every time after using this? maybe not
     if (!ENOUGH_MAG) {
       jump ReloadColt();
     }
@@ -3658,11 +3708,11 @@ procedures:
       if (GetPlayer()->m_bSniping) {
         FireSniperBullet(FLOAT3D(0.0f, 0.0f, 0.0f), 1500.0f, GetInventory()->GetDamage(WEAPON_SNIPER), 0.0f);
         //damage was 300 i set to 500, cause alt has 450 for some reason and still kinda sucks ass
-        DecAmmo(m_iSniperBullets, 4);
+        DecAmmoOld(m_iSniperBullets, 4);
       } else {
         FireSniperBullet(FirePos(WEAPON_SNIPER), 1000.0f, GetInventory()->GetDamage(WEAPON_SNIPER) / 6.0f, 2.25f); //spraed decreased from 5f to 2.5f
         //was divided by 4 but well we'ere making "main"" fire automatic
-        DecAmmo(m_iSniperBullets, 1);
+        DecAmmoOld(m_iSniperBullets, 1);
       }
       GetPlayer()->m_tmLastSniperFire = _pTimer->CurrentTick();
 
