@@ -51,7 +51,7 @@ static void ParseAmmoConfig(CAmmoStruct *pwa, CTString strSet, CTString strConfi
   // Ammo properties
   if (GetConfigString(cb, "Name", pwa->strPickup)) {
     // Translate immediately
-    pwa->strPickup = Translate(pwa->strPickup.str_String, 0);
+    pwa->strPickup = Translate(pwa->strPickup.str_String, 0); //doesnt work for some reason?
   }
 
   GetConfigString(cb, "Icon", pwa->strIcon);

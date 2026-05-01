@@ -997,7 +997,18 @@ functions:
     
     // add ammo
     paAmmo.iAmount += iAmmo;
+    if (Eai.EaitType == AIT_SHELLS)
+    {
+        m_aAmmo[4].iAmount += 1; // adds 1 grenade upon picking up shells
+        //4 is _aiAmmoSetTypes[AIT_GRENADES]
+    }
 
+    //CTString _strPickup = paAmmo.pasAmmoStruct->strPickup;
+    //GetPlayer()->ItemPicked(TRANS(_strPickup), iAmmo); //fix no translation on ammo pickup
+    //above code doesnt want to compile
+    //technicaly the translation is called in the AmmoSets.cpp however it doesnt work there
+    //weapon Translate() does work correctly  for some reason
+    //perhaps mismatched string? rather than the function not being called
     GetPlayer()->ItemPicked(paAmmo.pasAmmoStruct->strPickup, iAmmo);
     AddManaToPlayer(iAmmo * paAmmo.pasAmmoStruct->fMana * MANA_AMMO);
 
