@@ -1272,12 +1272,14 @@ extern void DrawHUD( const CPlayer *penPlayerCurrent, CDrawPort *pdpCurrent, BOO
       strArmor.PrintF(  "%d", iArmor);
       // detemine corresponding colors
       colHealth = C_mlRED;
-      colMana = colScore = colFrags = colDeaths = colArmor = C_lGRAY;
+      colMana = colFrags = colArmor = C_lGRAY;
+      colScore = C_WHITE;
+      colDeaths = C_mdRED;
       if( iMana   > _penPlayer->m_iMana)                      { bMaxMana   = FALSE; colMana   = C_WHITE; }
       if( iScore  > _penPlayer->m_psGameStats.ps_iScore)      { bMaxScore  = FALSE; colScore  = C_WHITE; }
       if( iFrags  > _penPlayer->m_psGameStats.ps_iKills)      { bMaxFrags  = FALSE; colFrags  = C_WHITE; }
       if( iDeaths > _penPlayer->m_psGameStats.ps_iDeaths)     { bMaxDeaths = FALSE; colDeaths = C_WHITE; }
-      if( penPlayer==_penPlayer) colScore = colMana = colFrags = colDeaths = _colHUD; // current player
+      if( penPlayer==_penPlayer) colMana = colFrags = _colHUD; // current player
       if( iHealth>25) colHealth = _colHUD;
       if( iArmor >25) colArmor  = _colHUD;
       // eventually print it out
@@ -1287,10 +1289,12 @@ extern void DrawHUD( const CPlayer *penPlayerCurrent, CDrawPort *pdpCurrent, BOO
 
         // [Cecil] fOneUnit multiplier 2 -> 4; removed colon
         if( bCooperative) { 
-          _pDP->PutTextR(strName,   _pixDPWidth-12*fCharWidth, fCharHeight*i+fOneUnit*4, colScore |_ulAlphaHUD);
-          _pDP->PutText("/",        _pixDPWidth- 6*fCharWidth, fCharHeight*i+fOneUnit*4, _colHUD  |_ulAlphaHUD);
-          _pDP->PutTextC(strHealth, _pixDPWidth- 3*fCharWidth, fCharHeight*i+fOneUnit*4, colHealth|_ulAlphaHUD);
-          _pDP->PutTextC(strScore, _pixDPWidth - 9 * fCharWidth, fCharHeight * i + fOneUnit * 4, colScore | _ulAlphaHUD);
+          _pDP->PutTextR(strName,   _pixDPWidth-15*fCharWidth, fCharHeight*i+fOneUnit*4, colScore |_ulAlphaHUD);
+          _pDP->PutText("/",        _pixDPWidth- 13*fCharWidth, fCharHeight*i+fOneUnit*4, _colHUD  |_ulAlphaHUD);
+          _pDP->PutTextC(strHealth, _pixDPWidth- 12*fCharWidth, fCharHeight*i+fOneUnit*4, colHealth|_ulAlphaHUD);
+          //_pDP->PutText("/", _pixDPWidth - 6 * fCharWidth, fCharHeight * i + fOneUnit * 4, _colHUD | _ulAlphaHUD);
+          _pDP->PutTextC(strScore, _pixDPWidth - 8 * fCharWidth, fCharHeight * i + fOneUnit * 4, colScore | _ulAlphaHUD);
+          //_pDP->PutText("/", _pixDPWidth - 7 * fCharWidth, fCharHeight* i + fOneUnit * 4, _colHUD | _ulAlphaHUD);
           //todo: truncate score to make it more readable? ex. 12345 -> 12.3k
           _pDP->PutTextC(strDeaths, _pixDPWidth - 2 * fCharWidth, fCharHeight* i + fOneUnit * 4, colDeaths | _ulAlphaHUD);
           //_pDP->PutTextC(strArmor,  _pixDPWidth- 3*fCharWidth, fCharHeight*i+fOneUnit*4, colArmor |_ulAlphaHUD);

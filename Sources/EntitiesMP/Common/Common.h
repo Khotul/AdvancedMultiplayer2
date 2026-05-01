@@ -39,7 +39,7 @@
 #define MAX_SHELLS        INDEX(200)
 #define MAX_ROCKETS       INDEX(100)
 #define MAX_GRENADES      INDEX(120)
-#define MAX_NAPALM        INDEX(2000)
+#define MAX_NAPALM        INDEX(1200)
 #define MAX_ELECTRICITY   INDEX(800)
 #define MAX_IRONBALLS     INDEX(30)
 #define MAX_SNIPERBULLETS INDEX(200)

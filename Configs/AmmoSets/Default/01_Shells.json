@@ -2,6 +2,6 @@
   "Name" : "Shells",
   "Icon" : "TexturesMP\Interface\AmShells.tex",
   
-  "Ammo" : 100,
+  "Ammo" : 200,
   "Mana" : 70.0,
 }

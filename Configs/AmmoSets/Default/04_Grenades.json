@@ -2,6 +2,6 @@
   "Name" : "Grenades",
   "Icon" : "TexturesMP\Interface\AmGrenades.tex",
   
-  "Ammo" : 50,
+  "Ammo" : 120,
   "Mana" : 150.0,
 }

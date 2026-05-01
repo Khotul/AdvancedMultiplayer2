@@ -282,7 +282,7 @@ functions:
 
     switch (m_EaitType) {
       case AIT_SHELLS:
-        m_fValue = 10.0f;
+        m_fValue = 12.0f;
         m_fRespawnTime = (m_fCustomRespawnTime > 0) ? m_fCustomRespawnTime : 30.0f; 
         m_strDescription.PrintF("Shells: %d", (int)fValue);
         // set appearance
@@ -291,7 +291,7 @@ functions:
         StretchItem(FLOAT3D(0.75f, 0.75f, 0.75f));
         break;
       case AIT_BULLETS:
-        m_fValue = 50.0f;
+        m_fValue = 100.0f;
         m_fRespawnTime = (m_fCustomRespawnTime > 0) ? m_fCustomRespawnTime : 30.0f; 
         m_strDescription.PrintF("Bullets: %d", (int)fValue);
         // set appearance
@@ -319,7 +319,7 @@ functions:
         StretchItem(FLOAT3D(0.75f, 0.75f, 0.75f));
         break;
       case AIT_GRENADES:
-        m_fValue = 5.0f;
+        m_fValue = 8.0f;
         m_fRespawnTime = (m_fCustomRespawnTime > 0) ? m_fCustomRespawnTime : 30.0f; 
         m_strDescription.PrintF("Grenades: %d", (int)fValue);
         // set appearance
@@ -328,7 +328,7 @@ functions:
         StretchItem(FLOAT3D(0.75f, 0.75f, 0.75f));
         break;
       case AIT_ELECTRICITY:
-        m_fValue = 50.0f;
+        m_fValue = 75.0f;
         m_fRespawnTime = (m_fCustomRespawnTime > 0) ? m_fCustomRespawnTime : 30.0f; 
         m_strDescription.PrintF("Electricity: %d", (int)fValue);
         // set appearance
@@ -349,7 +349,7 @@ functions:
         StretchItem(FLOAT3D(0.75f, 0.75f, 0.75f));
         break;
       case AIT_NAPALM:
-        m_fValue = 100.0f;
+        m_fValue = 200.0f;
         m_fRespawnTime = (m_fCustomRespawnTime > 0) ? m_fCustomRespawnTime : 30.0f; 
         m_strDescription.PrintF("Napalm: %d", (int)fValue);
         // set appearance
@@ -376,7 +376,7 @@ functions:
         StretchItem(FLOAT3D(0.5f, 0.5f, 0.5f));
         break;
       case AIT_SNIPERBULLETS:
-        m_fValue = 5.0f;
+        m_fValue = 16.0f;
         m_fRespawnTime = (m_fCustomRespawnTime > 0) ? m_fCustomRespawnTime : 30.0f; 
         m_strDescription.PrintF("Sniper bullets: %d", (int)fValue);
         // set appearance

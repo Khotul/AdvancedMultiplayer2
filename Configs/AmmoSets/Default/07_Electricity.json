@@ -2,6 +2,6 @@
   "Name" : "Electricity",
   "Icon" : "TexturesMP\Interface\AmElectricity.tex",
   
-  "Ammo" : 400,
+  "Ammo" : 800,
   "Mana" : 250.0,
 }

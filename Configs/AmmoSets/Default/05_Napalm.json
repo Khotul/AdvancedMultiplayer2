@@ -2,6 +2,6 @@
   "Name" : "Napalm",
   "Icon" : "TexturesMP\Interface\AmFuelReservoir.tex",
   
-  "Ammo" : 500,
+  "Ammo" : 1200,
   "Mana" : 200.0,
 }

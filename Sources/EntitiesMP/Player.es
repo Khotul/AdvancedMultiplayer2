@@ -4910,16 +4910,14 @@ functions:
     } else if (GetSP()->AltMode() == 2) {
       bExtraFire = TRUE;
     } 
-    if (GetWeapon(0)->GetCurrent() == WEAPON_SNIPER) {
+    if (ulReleasedButtons & PLACT_ALTFIRE && GetWeapon(0)->GetCurrent() == WEAPON_SNIPER) {
+        bAltZoomHeld = FALSE;
+    }
+    if (ulNewButtons & PLACT_ALTFIRE && GetWeapon(0)->GetCurrent() == WEAPON_SNIPER) {
         //should only trigger in singular mode i hope
         if (ulNewButtons & PLACT_ALTFIRE) {
             bAltZoomHeld = TRUE;
         }
-
-	    if (ulReleasedButtons & PLACT_ALTFIRE) {
-		    bAltZoomHeld = FALSE;
-	    }
-
         
       CPlayerWeapons *penWeapon = GetWeapon(0);
      
