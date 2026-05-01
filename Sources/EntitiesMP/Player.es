@@ -4909,7 +4909,8 @@ functions:
     // secondary fire on main weapon
     } else if (GetSP()->AltMode() == 2) {
       bExtraFire = TRUE;
-    } else if (GetWeapon(0)->GetCurrent() == WEAPON_SNIPER) {
+    } 
+    if (GetWeapon(0)->GetCurrent() == WEAPON_SNIPER) {
         //should only trigger in singular mode i hope
         if (ulNewButtons & PLACT_ALTFIRE) {
             bAltZoomHeld = TRUE;

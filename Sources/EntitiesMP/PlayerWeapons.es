@@ -3270,10 +3270,13 @@ procedures:
     
     //placeholder sound
     PlaySound(m_soWeapon0, SOUND_MINIGUN_CLICK, SOF_3D|SOF_VOLUMETRIC);
+
+    SWeaponAnim *pan = GetWeaponAnim("Attack", FALSE);
+    m_moWeapon.PlayAnim(pan->aiAnims[1], 0);
     autowait(AdjustAttackSpeed(0.55f));
 
     // Fire bullet
-    FireOneBullet(FirePos(WEAPON_COLT), 500.0f, GetInventory()->GetDamage(WEAPON_COLT) * 5.0f);
+    FireOneBullet(FirePos(WEAPON_COLT), 500.0f, GetInventory()->GetDamage(WEAPON_COLT) * 11.0f);
 
     if(_pNetwork->IsPlayerLocal(m_penPlayer)) {IFeel_PlayEffect("Colt_fire");}
     DoRecoil();
@@ -3704,7 +3707,7 @@ procedures:
           INDEX iAmmo = ClampUp(GetInventory()->CurrentAmmo(m_iCurrentWeapon), (INDEX)4);
           DecAmmoExact(m_iCurrentWeapon, iAmmo, FALSE);
       } else {
-        FireSniperBullet(FirePos(WEAPON_SNIPER), 1000.0f, GetInventory()->GetDamage(WEAPON_SNIPER) / 6.0f, 2.25f); //spraed decreased from 5f to 2.5f
+        FireSniperBullet(FirePos(WEAPON_SNIPER), 1000.0f, GetInventory()->GetDamage(WEAPON_SNIPER) / 10.0f, 2.25f); //spraed decreased from 5f to 2.5f
         //was divided by 4 but well we'ere making "main"" fire automatic
         DecAmmoExact(m_iCurrentWeapon, (INDEX)1, FALSE);
       }
