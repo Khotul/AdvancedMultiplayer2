@@ -885,6 +885,8 @@ properties:
  220 FLOAT m_fVoiceCommands = -100.0f,
  221 BOOL m_bToggleDualWield = FALSE,
 
+ 222 FLOAT m_tmLastDeath = -1.0f;
+
 {
   ShellLaunchData ShellLaunchData_array; // array of data describing flying empty shells
   INDEX m_iFirstEmptySLD; // index of last added empty shell
@@ -6185,8 +6187,12 @@ procedures:
 
       //score penalty for dying, repeated deaths in one level more penalizing
       //todo: should we prevent negative score? also make configurable
-      m_psLevelStats.ps_iScore -= 10000 * m_psLevelStats.ps_iDeaths;
-	  m_psGameStats.ps_iScore -= 10000 * m_psLevelStats.ps_iDeaths;
+      INDEX _iPenalty = 5000;
+      if (_pTimer->CurrentTick() - m_tmLastDeath <= 200.0f) //20tps
+        _iPenalty = 1000; //if player died less than ten seconds ago, less penalty; todo: get invulnerability time and subtract from the grace period
+      m_psLevelStats.ps_iScore -= _iPenalty * m_psLevelStats.ps_iDeaths;
+	  m_psGameStats.ps_iScore -= _iPenalty * m_psLevelStats.ps_iDeaths;
+      m_tmLastDeath = _pTimer->CurrentTick();
     // if not in cooperative, and not single player
     } else {
       // print death message

@@ -3276,7 +3276,7 @@ procedures:
     autowait(AdjustAttackSpeed(0.65f));
 
     // Fire bullet
-    FireOneBullet(FirePos(WEAPON_COLT), 500.0f, GetInventory()->GetDamage(WEAPON_COLT) * 10.0f + 2.0f);
+    FireOneBullet(FirePos(WEAPON_COLT), 500.0f, GetInventory()->GetDamage(WEAPON_COLT) * 10.0f + 4.0f);
 
     if(_pNetwork->IsPlayerLocal(m_penPlayer)) {IFeel_PlayEffect("Colt_fire");}
     DoRecoil();
