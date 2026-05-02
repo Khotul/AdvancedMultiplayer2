@@ -7438,6 +7438,7 @@ procedures:
       on (EReceiveScore eScore) : {
         m_psLevelStats.ps_iScore += eScore.iPoints;
         m_psGameStats.ps_iScore += eScore.iPoints;
+        StoreScore(eScore.iPoints);
         m_iMana += eScore.iPoints*GetSP()->sp_fManaTransferFactor;
         CheckHighScore();
 

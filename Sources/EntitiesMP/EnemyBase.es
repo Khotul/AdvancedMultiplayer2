@@ -2759,6 +2759,7 @@ procedures:
       // [Cecil] Mark as an enemy
       eScore.bEnemy = TRUE;
 
+      //sendevent storescore or hijack the existing one? hijacking will also show up in scorematch gamemode
       penKiller->SendEvent(eScore);
 
       if (CountAsKill()) {
