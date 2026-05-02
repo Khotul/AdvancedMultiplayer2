@@ -377,6 +377,7 @@ static FLOAT plr_fWalkSoundDelay = 0.5f;
 static FLOAT plr_fRunSoundDelay  = 0.3f;
 
 extern INDEX SCORES_MAX = 5;
+static const INDEX SCORE_DISPLAY_TICKS = 1000;
 extern FLOAT m_aiScores[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 extern INDEX m_aiScoreTicks[5] = {0, 0, 0, 0, 0};
 
@@ -2833,6 +2834,7 @@ functions:
     //put above combo just so it doesnt inherit changed font etc
     //FLOAT _widths[] = { 0.7f, 0.6f, 0.5f, 0.4f, 0.3f }; //hardcoded for now, preferably make it formula on loop
     for (INDEX i = 0; i < SCORES_MAX; i++) {
+      pdp->SetTextAspect(0.9f);
       FLOAT _width = 0.7f - i * 0.1f;
 	  /*FLOAT fScoreScale = fScale * _widths[i];
 	  pdp->SetFont(&_fdScoreFont);
@@ -2841,7 +2843,9 @@ functions:
 	  CTString strScore = CTString(0, "%d", m_aiScores[i]);
 	  FLOAT2D vScoreSize = FLOAT2D(pdp->GetTextWidth(strScore) + 8.0f*fScoreScale, (_fdScoreFont.GetHeight()-4.0f) * fScoreScale); */
       if (m_aiScores[i] > 0.0f) {
-		pdp->PutTextCXY(CTString(0, "+%d", m_aiScores[i]), pixDPWidth * _width, pixDPHeight * 0.12f, 0xCCCCCCFF);
+        CTString _str;
+        _str.PrintF("+%d", m_aiScores[i]);
+		pdp->PutTextCXY(_str, pixDPWidth * _width, pixDPHeight * 0.1f, 0xCCCCCCFF);
         m_aiScoreTicks[i]--;
         if (m_aiScoreTicks[i] <= 0) {
             m_aiScores[i] = 0.0f;
@@ -6080,13 +6084,14 @@ functions:
 
   void StoreScore(FLOAT fScore) {
       for (INDEX i =0; i < SCORES_MAX; i++) {
-		if (m_aiScores[i] == 0) {
+		if (m_aiScores[i] <= 0.1f) {
 		  m_aiScores[i] = fScore;
-          m_aiScoreTicks[i] = 100; //display for 100 ticks
+          m_aiScoreTicks[i] = SCORE_DISPLAY_TICKS; //display for 100 ticks
+          //i was under the impression the game has 20tps, 100ticks = 5s, but seems that it's not? it disappears instantly
 		  return;
 		}
       }
-      INDEX lowest = 101;
+      INDEX lowest = SCORE_DISPLAY_TICKS + 1;
       INDEX i_lowest = 0;
       //get the score that's been there for the longest time
       for (i = 0; i < SCORES_MAX; i++) {
@@ -6096,7 +6101,7 @@ functions:
 		}
       }
 	  m_aiScores[i_lowest] = fScore;
-	  m_aiScoreTicks[i_lowest] = 100;
+	  m_aiScoreTicks[i_lowest] = SCORE_DISPLAY_TICKS;
       return;
   };
 
