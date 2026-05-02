@@ -376,6 +376,10 @@ static FLOAT plr_fDiveSoundDelay = 1.6f;
 static FLOAT plr_fWalkSoundDelay = 0.5f;
 static FLOAT plr_fRunSoundDelay  = 0.3f;
 
+extern INDEX SCORES_MAX = 5;
+extern FLOAT m_aiScores[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+extern INDEX m_aiScoreTicks[5] = {0, 0, 0, 0, 0};
+
 // Player that wants to call the computer
 DECL_DLL extern class CPlayer *cmp_ppenPlayer = NULL;
 // For rendering computer on secondary display in dualhead
@@ -886,6 +890,7 @@ properties:
  221 BOOL m_bToggleDualWield = FALSE,
 
  222 FLOAT m_tmLastDeath = -1.0f,
+
 
 {
   ShellLaunchData ShellLaunchData_array; // array of data describing flying empty shells
@@ -2824,6 +2829,24 @@ functions:
 
       // [Cecil] pixDPHeight*0.2f -> pixDPHeight*0.35f
       pdp->PutTextCXY(TRANS("Analyzing..."), pixDPWidth*0.5f, pixDPHeight*0.35f, SE_COL_BLUE_NEUTRAL_LT|ubA);
+    }
+    //put above combo just so it doesnt inherit changed font etc
+    //FLOAT _widths[] = { 0.7f, 0.6f, 0.5f, 0.4f, 0.3f }; //hardcoded for now, preferably make it formula on loop
+    for (INDEX i = 0; i < SCORES_MAX; i++) {
+      FLOAT _width = 0.7f - i * 0.1f;
+	  /*FLOAT fScoreScale = fScale * _widths[i];
+	  pdp->SetFont(&_fdScoreFont);
+	  pdp->SetTextScaling(fScoreScale);
+	  pdp->SetTextAspect(1.0f);
+	  CTString strScore = CTString(0, "%d", m_aiScores[i]);
+	  FLOAT2D vScoreSize = FLOAT2D(pdp->GetTextWidth(strScore) + 8.0f*fScoreScale, (_fdScoreFont.GetHeight()-4.0f) * fScoreScale); */
+      if (m_aiScores[i] > 0.0f) {
+		pdp->PutTextCXY(CTString(0, "+%d", m_aiScores[i]), pixDPWidth * _width, pixDPHeight * 0.12f, 0xCCCCCCFF);
+        m_aiScoreTicks[i]--;
+        if (m_aiScoreTicks[i] <= 0) {
+            m_aiScores[i] = 0.0f;
+        }
+      }
     }
 
     // [Cecil] Print combo amount
@@ -6055,6 +6078,28 @@ functions:
     }
   };
 
+  void StoreScore(FLOAT fScore) {
+      for (INDEX i =0; i < SCORES_MAX; i++) {
+		if (m_aiScores[i] == 0) {
+		  m_aiScores[i] = fScore;
+          m_aiScoreTicks[i] = 100; //display for 100 ticks
+		  return;
+		}
+      }
+      INDEX lowest = 101;
+      INDEX i_lowest = 0;
+      //get the score that's been there for the longest time
+      for (i = 0; i < SCORES_MAX; i++) {
+		if (m_aiScoreTicks[i] < lowest) {
+		  lowest = m_aiScoreTicks[i];
+		  i_lowest = i;
+		}
+      }
+	  m_aiScores[i_lowest] = fScore;
+	  m_aiScoreTicks[i_lowest] = 100;
+      return;
+  };
+
   // check whether this time we respawn in place or on marker
   void CheckDeathForRespawnInPlace(EDeath eDeath)
   {
@@ -6191,6 +6236,10 @@ procedures:
       if (_pTimer->CurrentTick() - m_tmLastDeath <= 200.0f) //20tps
       {
           _iPenalty = 1000; //if player died less than ten seconds ago, less penalty; todo: get invulnerability time and subtract from the grace period
+      }
+      if (eDeath.eLastDamage.penInflictor != NULL && IsOfClass(eDeath.eLastDamage.penInflictor, "Player"))
+      {
+          _iPenalty /= 10; //teamkill or self kill; i hate the crushing thingies in sierra de chiapas
       }
       m_psLevelStats.ps_iScore -= _iPenalty * m_psLevelStats.ps_iDeaths;
 	  m_psGameStats.ps_iScore -= _iPenalty * m_psLevelStats.ps_iDeaths;
@@ -7205,6 +7254,7 @@ procedures:
     // return to main loop
     return EVoid();
   };
+
 
   Main() {
     // remember start time

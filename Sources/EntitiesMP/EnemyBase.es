@@ -2861,6 +2861,10 @@ procedures:
     m_fTacticVar5=_pTimer->CurrentTick();
     // mark that we didn't spawned dust yet
     m_fTacticVar3=-1;
+    
+    //TODO: add floating text akin to XBOX mod?
+    //no idea how to do that; sohuld be spawned similar to dust
+    // RenderPlayerTags from Player should be useful (call for the player who killed)
     // if no dust should be spawned
     if( m_fTacticVar4<0)
     {
