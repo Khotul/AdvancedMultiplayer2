@@ -979,6 +979,7 @@ functions:
           m_aAmmo[1].iAmount +=  20 * GetSP()->sp_fAmmoQuantity * AmmoMul();
           m_aAmmo[2].iAmount += 200 * GetSP()->sp_fAmmoQuantity * AmmoMul();
           m_aAmmo[3].iAmount +=   5 * GetSP()->sp_fAmmoQuantity * AmmoMul();
+          //todo if player doesnt have ammo skip, if they do add a bit of it to them
 
           GetPlayer()->ItemPicked(TRANS("Ammo pack"), 0);
           AddManaToPlayer(100.0f * MANA_AMMO);
@@ -986,6 +987,9 @@ functions:
 
         case AIT_SERIOUSPACK: {
           // give all ammo
+          //todo: multiply max by 0.8f-0.9f to make it more fair?
+          //perhaps make it yet another array
+          //todotodo: add those things to opptions so player can cusotmize them (not really needed since its for personal use but whatever)
           for (INDEX i = 0; i < m_aAmmo.Count(); i++) {
             m_aAmmo[i].SetMax();
           }

@@ -2844,7 +2844,7 @@ functions:
 	  FLOAT2D vScoreSize = FLOAT2D(pdp->GetTextWidth(strScore) + 8.0f*fScoreScale, (_fdScoreFont.GetHeight()-4.0f) * fScoreScale); */
       if (m_aiScores[i] > 0.0f) {
         CTString _str;
-        _str.PrintF("+%f", m_aiScores[i]);
+        _str.PrintF("+%d", (int)m_aiScores[i]);
 		pdp->PutTextCXY(_str, pixDPWidth * _width, pixDPHeight * 0.1f, 0xCCCCCCFF);
         m_aiScoreTicks[i]--;
         if (m_aiScoreTicks[i] <= 0) {
@@ -6098,11 +6098,17 @@ functions:
       for (i = 0; i < SCORES_MAX; i++) {
 		if (m_aiScoreTicks[i] < lowest) {
 		  lowest = m_aiScoreTicks[i];
+          
 		  i_lowest = i;
 		}
       }
+      if (lowest >= SCORE_DISPLAY_TICKS)
+      {
+          return;
+      }
 	  m_aiScores[i_lowest] = fScore;
 	  m_aiScoreTicks[i_lowest] = SCORE_DISPLAY_TICKS;
+      //todo: color based on score amount from 100k to 1, prob just yellow and multiply appropriate hex part by fscore/100000.0f
       return;
   };
 
