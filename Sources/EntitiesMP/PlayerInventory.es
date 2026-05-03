@@ -40,6 +40,21 @@ static const INDEX _aiAmmoSetTypes[] = {
    6, // AIT_SNIPERBULLETS
 };
 
+static const INDEX _aiAmmoPickupMinimum[] = {
+  0, // invalid
+  12, // AIT_SHELLS
+  100, // AIT_BULLETS
+  5, // AIT_ROCKETS
+  8, // AIT_GRENADES
+  75, // AIT_ELECTRICITY
+  0, // AIT_NUKEBALL (invalid)
+  4, // AIT_IRONBALLS
+  0, // AIT_SERIOUSPACK (invalid)
+  0, // AIT_BACKPACK (invalid)
+  200, // AIT_NAPALM
+  16, // AIT_SNIPERBULLETS
+};
+
 // Currently selected weapon set
 extern CTString _strCurrentWeaponSet;
 
@@ -984,7 +999,13 @@ functions:
     }
 
     // ammo amount
-    INDEX iAmmo = ceil(FLOAT(Eai.iQuantity) * AmmoMul());
+    INDEX iAmmo = Eai.iQuantity;
+    //INDEX _min = _aiAmmoPickupMinimum[_aiAmmoSetTypes[Eai.EaitType]];
+    INDEX _min = _aiAmmoPickupMinimum[Eai.EaitType];
+    if (iAmmo < _min) {
+	  iAmmo = _min;
+    }
+    iAmmo = ceil(FLOAT(iAmmo) * AmmoMul());
 
     // ammo reference
     SPlayerAmmo &paAmmo = m_aAmmo[iType];
@@ -1057,6 +1078,12 @@ functions:
     if (bLacking) {
       // [Cecil] Add ammo
       for (INDEX iAdd = 1; iAdd <= 8; iAdd++) {
+          if (iAdd == 6)
+          {
+              m_aAmmo[iAdd].iAmount += ceil(FLOAT(aiSet[iAdd-1]) * 3.0f * AmmoMul()); //sloppy code, if sniperbullets multiply by 3
+              //wont be dislpayed in string 
+              continue;
+          }
         m_aAmmo[iAdd].iAmount += ceil(FLOAT(aiSet[iAdd-1]) * AmmoMul());
       }
 

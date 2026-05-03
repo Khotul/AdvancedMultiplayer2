@@ -636,7 +636,30 @@ static void HUD_DrawEntityStack()
 //<<<<<<< DEBUG FUNCTIONS >>>>>>>
 
 // main
+CTString _FmtScoreString(INDEX iScore)
+{
+    CTString _ret;
+    if (iScore < 100000)
+    {
+        _ret.PrintF("%d", iScore);
+        return _ret;
+    }
+    if (iScore < 1000000)
+    {
+        _ret.PrintF("%dK", iScore / 1000);
+        return _ret;
+    }
+    if (iScore < 1000000000)
+    {
+        int _mil = iScore / 1000000;
+        int _thou = ((iScore % 1000000) / 10000);
+        _ret.PrintF("%d.%02dM", _mil, _thou);
+        return _ret;
+    }
+    _ret.PrintF("MAX"); //impossible to get more than 1b without cheats 
+	return _ret;
 
+};
 // render interface (frontend) to drawport
 // (units are in pixels for 640x480 resolution - for other res HUD will be scalled automatically)
 extern void DrawHUD( const CPlayer *penPlayerCurrent, CDrawPort *pdpCurrent, BOOL bSnooping, const CPlayer *penPlayerOwner) {
@@ -1534,29 +1557,6 @@ extern void DrawHUD( const CPlayer *penPlayerCurrent, CDrawPort *pdpCurrent, BOO
   _tmLast = _tmNow;
 };
 
-CTString _FmtScoreString(INDEX iScore)
-{
-    CTString _ret;
-    if (iScore < 100000)
-    {
-		_ret.PrintF("%d", iScore);
-        return _ret;
-    }
-    if (iScore < 1000000)
-    {
-        _ret.PrintF("%dK", iScore/1000);
-		return _ret;
-    }
-    if (iScore < 10000000)
-    {
-        int _mil = iScore/1000000;
-        int _thou = ((iScore % 1000000) / 10000);
-		_ret.PrintF("%d.%02dM", _mil, _thou);
-		return _ret;
-    }
-
-
-}
 // initialize all that's needed for drawing the HUD
 extern void InitHUD(void) {
   // try to

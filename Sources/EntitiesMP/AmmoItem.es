@@ -280,6 +280,9 @@ functions:
       fValue = m_fCustomValue;
     }
 
+    //m_fValue seems to be deprecated? or at least added in the editor upon placing new ammo entity?
+    //which doesnt make sense cause you cant edit ammo count for entities other than backpack
+    //actual minimum values set in PlayerInventory.es 
     switch (m_EaitType) {
       case AIT_SHELLS:
         m_fValue = 12.0f;
