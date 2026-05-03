@@ -1313,14 +1313,14 @@ extern void DrawHUD( const CPlayer *penPlayerCurrent, CDrawPort *pdpCurrent, BOO
 
         // [Cecil] fOneUnit multiplier 2 -> 4; removed colon
         if( bCooperative) { 
-          _pDP->PutTextR(strName,   _pixDPWidth-14*fCharWidth, fCharHeight*i+fOneUnit*4, colFrags |_ulAlphaHUD);
-          _pDP->PutText("/",        _pixDPWidth- 13*fCharWidth, fCharHeight*i+fOneUnit*4, _colHUD  |_ulAlphaHUD);
-          _pDP->PutTextC(strHealth, _pixDPWidth- 12*fCharWidth, fCharHeight*i+fOneUnit*4, colHealth|_ulAlphaHUD);
-          _pDP->PutText("/", _pixDPWidth - 9 * fCharWidth, fCharHeight * i + fOneUnit * 4, _colHUD | _ulAlphaHUD);
-          _pDP->PutTextC(strScore, _pixDPWidth - 8 * fCharWidth, fCharHeight * i + fOneUnit * 4, colScore | _ulAlphaHUD);
+          _pDP->PutTextR(strName,   _pixDPWidth-11*fCharWidth, fCharHeight*i+fOneUnit*4, colFrags |_ulAlphaHUD);
+          _pDP->PutText("/",        _pixDPWidth- 10*fCharWidth, fCharHeight*i+fOneUnit*4, _colHUD  |_ulAlphaHUD);
+          _pDP->PutTextC(strHealth, _pixDPWidth- 9*fCharWidth, fCharHeight*i+fOneUnit*4, colHealth|_ulAlphaHUD);
+          _pDP->PutText("/", _pixDPWidth - 7 * fCharWidth, fCharHeight * i + fOneUnit * 4, _colHUD | _ulAlphaHUD);
+          _pDP->PutTextC(strScore, _pixDPWidth - 6 * fCharWidth, fCharHeight * i + fOneUnit * 4, colScore | _ulAlphaHUD);
           //_pDP->PutText("/", _pixDPWidth - 7 * fCharWidth, fCharHeight* i + fOneUnit * 4, _colHUD | _ulAlphaHUD);
           //todo: truncate score to make it more readable? ex. 12345 -> 12.3k
-          _pDP->PutTextC(strDeaths, _pixDPWidth - 1 * fCharWidth, fCharHeight* i + fOneUnit * 4, colDeaths | _ulAlphaHUD);
+          _pDP->PutTextC(strDeaths, _pixDPWidth - 2 * fCharWidth, fCharHeight* i + fOneUnit * 4, colDeaths | _ulAlphaHUD);
           //_pDP->PutTextC(strArmor,  _pixDPWidth- 3*fCharWidth, fCharHeight*i+fOneUnit*4, colArmor |_ulAlphaHUD);
         } else if( bScoreMatch) { 
           _pDP->PutTextR(strName,  _pixDPWidth-12*fCharWidth, fCharHeight*i+fOneUnit*4, _colHUD |_ulAlphaHUD);

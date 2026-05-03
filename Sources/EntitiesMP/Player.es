@@ -377,7 +377,7 @@ static FLOAT plr_fWalkSoundDelay = 0.5f;
 static FLOAT plr_fRunSoundDelay  = 0.3f;
 
 extern INDEX SCORES_MAX = 5;
-static const INDEX SCORE_DISPLAY_TICKS = 1000;
+static const INDEX SCORE_DISPLAY_TICKS = 600;
 extern FLOAT m_aiScores[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 extern INDEX m_aiScoreTicks[5] = {0, 0, 0, 0, 0};
 extern INT m_aiScoreColors[5] = {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF};
@@ -2836,7 +2836,7 @@ functions:
     //FLOAT _widths[] = { 0.7f, 0.6f, 0.5f, 0.4f, 0.3f }; //hardcoded for now, preferably make it formula on loop
     for (INDEX i = 0; i < SCORES_MAX; i++) {
       pdp->SetTextAspect(0.9f);
-      FLOAT _width = 0.7f - i * 0.1f;
+      FLOAT _width = 0.6f - i * 0.05f;
 	  /*FLOAT fScoreScale = fScale * _widths[i];
 	  pdp->SetFont(&_fdScoreFont);
 	  pdp->SetTextScaling(fScoreScale);
@@ -2846,7 +2846,7 @@ functions:
       if (m_aiScores[i] > 0.0f) {
         CTString _str;
         _str.PrintF("+%d", (int)m_aiScores[i]);
-		pdp->PutTextCXY(_str, pixDPWidth * _width, pixDPHeight * 0.1f, m_aiScoreColors[i]); //0xCCCCCCFF
+		pdp->PutTextCXY(_str, pixDPWidth * _width, pixDPHeight * 0.88f, m_aiScoreColors[i]); //0xCCCCCCFF
         m_aiScoreTicks[i]--;
         if (m_aiScoreTicks[i] <= 0) {
             m_aiScores[i] = 0.0f;
