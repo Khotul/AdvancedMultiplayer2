@@ -965,7 +965,7 @@ functions:
 
     // find proper ammo type
     INDEX iType = _aiAmmoSetTypes[Eai.EaitType];
-
+    INDEX i = 0;
     // invalid type
     if (iType == -1) {
       CPrintF("^cff0000Warning: Picking invalid ammo type: %d^r\n", Eai.EaitType);
@@ -980,6 +980,12 @@ functions:
           m_aAmmo[2].iAmount += 200 * GetSP()->sp_fAmmoQuantity * AmmoMul();
           m_aAmmo[3].iAmount +=   5 * GetSP()->sp_fAmmoQuantity * AmmoMul();
           //todo if player doesnt have ammo skip, if they do add a bit of it to them
+          for (i = 4; i < m_aAmmo.Count(); i++) {
+            if (m_aAmmo[i].iAmount > 0)
+            {
+                m_aAmmo[i].iAmount += _aiAmmoPickupMinimum[i] * 2 * GetSP()->sp_fAmmoQuantity * AmmoMul();
+            }
+          }
 
           GetPlayer()->ItemPicked(TRANS("Ammo pack"), 0);
           AddManaToPlayer(100.0f * MANA_AMMO);
@@ -1015,10 +1021,11 @@ functions:
     SPlayerAmmo &paAmmo = m_aAmmo[iType];
 
     // enough ammo
-    if (paAmmo.iAmount >= paAmmo.Max()) {
-      paAmmo.SetMax();
-      return FALSE;
-    }
+    //the ammo is already clamped at the end, and this prevents us from getting gernades from shells if shell are full
+    //if (paAmmo.iAmount >= paAmmo.Max()) {
+    //  paAmmo.SetMax();
+    //  return FALSE;
+    //}
     
     // add ammo
     paAmmo.iAmount += iAmmo;
