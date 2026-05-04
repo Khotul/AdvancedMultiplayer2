@@ -358,7 +358,7 @@ inline FLOAT MaxArmor(void) {
 
 inline FLOAT TopArmor(void) {
   BOOL bEasy = (GetSP()->sp_gdGameDifficulty <= CSessionProperties::GD_EASY);
-  return GetSP()->sp_fMaxArmor * (bEasy ? 1.0f : 0.5f);
+  return GetSP()->sp_fMaxArmorSoftCap * (bEasy ? 1.5f : 1.0f);
 };
 
 inline FLOAT MaxHealth(void) {
@@ -368,7 +368,7 @@ inline FLOAT MaxHealth(void) {
 
 inline FLOAT TopHealth(void) {
   BOOL bEasy = (GetSP()->sp_gdGameDifficulty <= CSessionProperties::GD_EASY);
-  return GetSP()->sp_fStartHealth * (bEasy ? 2.0f : 1.0f);
+  return GetSP()->sp_fMaxHealthSoftCap * (bEasy ? 2.0f : 1.0f);
 };
 
 // [Cecil] Fire speed multiplier

@@ -3647,7 +3647,7 @@ procedures:
       m_tmDrawStartTime = 0.0f;
 
       // fire some bullets
-      m_iAmmoLeft = ClampUp(GetInventory()->CurrentAmmo(m_iCurrentWeapon), (INDEX)5);
+      m_iAmmoLeft = ClampUp(GetInventory()->CurrentAmmo(m_iCurrentWeapon), (INDEX)4); //buffed from 5 since its good but not good enough to justify ammo cost
       DecAmmoExact(m_iCurrentWeapon, m_iAmmoLeft, FALSE);
 
       while (--m_iAmmoLeft >= 0) {
@@ -3708,7 +3708,7 @@ procedures:
           INDEX iAmmo = ClampUp(GetInventory()->CurrentAmmo(m_iCurrentWeapon), (INDEX)4);
           DecAmmoExact(m_iCurrentWeapon, iAmmo, FALSE);
       } else {
-        FireSniperBullet(FirePos(WEAPON_SNIPER), 1000.0f, GetInventory()->GetDamage(WEAPON_SNIPER) / 19.0f, 2.25f); //spraed decreased from 5f to 2.5f
+        FireSniperBullet(FirePos(WEAPON_SNIPER), 1000.0f, GetInventory()->GetDamage(WEAPON_SNIPER) / 19.0f, 2.15f); //spraed decreased from 5f to 2.5f
         //was divided by 4 but well we'ere making "main"" fire automatic
         // 480/12 ~= 39, laser has 20 tommygun/minigun 10
         DecAmmoExact(m_iCurrentWeapon, (INDEX)1, FALSE);

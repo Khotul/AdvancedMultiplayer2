@@ -8,7 +8,9 @@ static FLOAT amp_fJumpMultiplier = 1.0f;
 static FLOAT amp_fGravityMul = 1.0f;
 static FLOAT amp_fStartHealth = 100.0f;
 static FLOAT amp_fMaxHealth = 200.0f;
+static FLOAT amp_fMaxHealthSoftCap = 100.0f;
 static FLOAT amp_fMaxArmor = 200.0f;
+static FLOAT amp_fMaxArmorSoftCap = 100.0f;
 
 static INDEX amp_iEnemyMultiplier = 1;
 static INDEX amp_bBalancedEnemies = FALSE;
@@ -199,7 +201,9 @@ extern void DeclareExtraSymbols(void) {
   _pShell->DeclareSymbol("persistent user FLOAT amp_fGravityMul;", &amp_fGravityMul);
   _pShell->DeclareSymbol("persistent user FLOAT amp_fStartHealth;", &amp_fStartHealth);
   _pShell->DeclareSymbol("persistent user FLOAT amp_fMaxHealth;", &amp_fMaxHealth);
+  _pShell->DeclareSymbol("persistent user FLOAT amp_fMaxHealthSoftCap;", &amp_fMaxHealthSoftCap);
   _pShell->DeclareSymbol("persistent user FLOAT amp_fMaxArmor;", &amp_fMaxArmor);
+  _pShell->DeclareSymbol("persistent user FLOAT amp_fMaxArmorSoftCap;", &amp_fMaxArmorSoftCap);
 
   _pShell->DeclareSymbol("persistent user INDEX amp_iEnemyMultiplier;", &amp_iEnemyMultiplier);
   _pShell->DeclareSymbol("persistent user INDEX amp_bBalancedEnemies;", &amp_bBalancedEnemies);
@@ -346,7 +350,9 @@ extern void SetAdvancedParameters(CSessionProperties &sp) {
   sp.sp_fGravityMul      = (bOpt ? amp_fGravityMul : 1.0f);
   sp.sp_fStartHealth     = (bOpt ? amp_fStartHealth : 100.0f);
   sp.sp_fMaxHealth       = (bOpt ? amp_fMaxHealth : 200.0f);
+  sp.sp_fMaxHealthSoftCap= (bOpt ? amp_fMaxHealthSoftCap : 100.0f);
   sp.sp_fMaxArmor        = (bOpt ? amp_fMaxArmor : 200.0f);
+  sp.sp_fMaxArmorSoftCap = (bOpt ? amp_fMaxArmorSoftCap : 100.0f);
 
   sp.sp_iEnemyMultiplier = (bOpt ? amp_iEnemyMultiplier : 1);
   sp.sp_fFireSpeed       = (bOpt ? Clamp(amp_fFireSpeed, 0.01f, 100.0f) : 1.0f);

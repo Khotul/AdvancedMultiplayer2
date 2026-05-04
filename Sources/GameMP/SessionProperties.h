@@ -138,7 +138,9 @@ class CSessionProperties {
     FLOAT sp_fGravityMul;
     FLOAT sp_fStartHealth;
     FLOAT sp_fMaxHealth;
+    FLOAT sp_fMaxHealthSoftCap;
     FLOAT sp_fMaxArmor;
+    FLOAT sp_fMaxArmorSoftCap;
     INDEX sp_iEnemyMultiplier;
     FLOAT sp_fFireSpeed;
     FLOAT sp_fAmmoMultiplier;
