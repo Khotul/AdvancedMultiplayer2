@@ -377,10 +377,10 @@ static FLOAT plr_fWalkSoundDelay = 0.5f;
 static FLOAT plr_fRunSoundDelay  = 0.3f;
 
 extern INDEX SCORES_MAX = 5;
-static const INDEX SCORE_DISPLAY_TICKS = 600;
+static const INDEX SCORE_DISPLAY_TICKS = 500;
 extern FLOAT m_aiScores[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 extern INDEX m_aiScoreTicks[5] = {0, 0, 0, 0, 0};
-extern INT m_aiScoreColors[5] = {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF};
+extern ULONG m_aiScoreColors[5] = {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF};
 
 // Player that wants to call the computer
 DECL_DLL extern class CPlayer *cmp_ppenPlayer = NULL;
@@ -2853,7 +2853,7 @@ functions:
     //put above combo just so it doesnt inherit changed font etc
     //FLOAT _widths[] = { 0.7f, 0.6f, 0.5f, 0.4f, 0.3f }; //hardcoded for now, preferably make it formula on loop
     for (INDEX i = 0; i < SCORES_MAX; i++) {
-      pdp->SetTextAspect(0.9f);
+      pdp->SetTextAspect(0.8f);
       FLOAT _width = 0.6f - i * 0.05f;
 	  /*FLOAT fScoreScale = fScale * _widths[i];
 	  pdp->SetFont(&_fdScoreFont);
@@ -2864,7 +2864,7 @@ functions:
       if (m_aiScores[i] > 0.0f) {
         CTString _str;
         _str.PrintF("+%d", (int)m_aiScores[i]);
-		pdp->PutTextCXY(_str, pixDPWidth * _width, pixDPHeight * 0.88f, m_aiScoreColors[i]); //0xCCCCCCFF
+		pdp->PutTextCXY(_str, pixDPWidth * _width, pixDPHeight * 0.87f, m_aiScoreColors[i]); //0xCCCCCCFF
         m_aiScoreTicks[i]--;
         if (m_aiScoreTicks[i] <= 0) {
             m_aiScores[i] = 0.0f;
@@ -6102,13 +6102,13 @@ functions:
   };
 
   //returns a color from 0x0011xxFF where 00 is color0, 11 is color1 and xx is calculated from 0 to 255 based on ratio of inpunt and max
-  INT FloatToColor(FLOAT fInput, FLOAT fMax, INT xColor0, INT xColor1) //expanded if i need in the future
+  ULONG FloatToColor(FLOAT fInput, FLOAT fMax, INT xColor0, INT xColor1) //expanded if i need in the future
   {
        FLOAT ratio = (fInput - 1.0f) / (fMax - 1.0f);
        if (ratio < 0.0f) { ratio = 0.0f; }
        if (ratio > 1.0f) { ratio = 1.0f; }
-       INT color = (INT)(255.0f * (1.0f - ratio));
-       return (xColor0 << 24) | (xColor1 << 16) | (color << 8) | 0xFF; //last is opaqueness
+       ULONG _color = (UINT)(255.0f * (1.0f - ratio));
+       return (xColor0 << 24) | (xColor1 << 16) | (_color << 8) | 0xFF; //last is opaqueness
   }
 
   void StoreScore(INDEX _iScore) {
@@ -6116,8 +6116,8 @@ functions:
       for (INDEX i =0; i < SCORES_MAX; i++) {
 		if (m_aiScores[i] <= 0.1f) {
 		  m_aiScores[i] = fScore;
-          m_aiScoreTicks[i] = SCORE_DISPLAY_TICKS; //display for 100 ticks
-          m_aiScoreColors[i] = FloatToColor(fScore, 100000.0f, 0xFF, 0xFF);
+          m_aiScoreTicks[i] = SCORE_DISPLAY_TICKS;
+          m_aiScoreColors[i] = FloatToColor(fScore, 25000.0f, 0xFF, 0xFF);
           //i was under the impression the game has 20tps, 100ticks = 5s, but seems that it's not? it disappears instantly
 		  return;
 		}
@@ -6138,7 +6138,7 @@ functions:
       }
 	  m_aiScores[i_lowest] = fScore;
 	  m_aiScoreTicks[i_lowest] = SCORE_DISPLAY_TICKS;
-      m_aiScoreColors[i_lowest] = FloatToColor(fScore, 100000.0f, 0xFF, 0xFF);
+      m_aiScoreColors[i_lowest] = FloatToColor(fScore, 25000.0f, 0xFF, 0xFF);
       //todo: color based on score amount from 100k to 1, prob just yellow and multiply appropriate hex part by fscore/100000.0f
       return;
   };
