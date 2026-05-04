@@ -893,6 +893,11 @@ properties:
 
  222 FLOAT m_tmLastDeath = -1.0f,
 
+ 230 INDEX st_iKillStreak = 0,
+ 231 INDEX st_iMaxKillStreak = 0,
+ 232 INDEX st_iLifeScore = 0,
+ 233 INDEX st_iMostScore = 0,
+
 
 {
   ShellLaunchData ShellLaunchData_array; // array of data describing flying empty shells
@@ -2074,6 +2079,19 @@ functions:
     strStats += "\n";
 
     strStats += AlignString(CTString(0, "  %s:\n%d/%d", TRANS("KILLS"), m_psLevelStats.ps_iKills, m_psLevelTotal.ps_iKills));
+    strStats += "\n";
+    if (st_iMaxKillStreak <= 0)
+    {
+        st_iMaxKillStreak = st_iKillStreak;
+    }
+    if (st_iMostScore <= 0)
+    {
+        st_iMostScore = st_iLifeScore;
+    }
+    strStats += AlignString(CTString(0, "  %s:\n%d", TRANS("HIGHEST KILL STREAK"), st_iMaxKillStreak));
+    strStats += "\n";
+
+    strStats += AlignString(CTString(0, "  %s:\n%d", TRANS("HIGHEST SCORE IN ONE LIFE"), st_iMostScore));
     strStats += "\n";
 
     if (iCoopType >= 1) {
@@ -6268,6 +6286,13 @@ procedures:
       }
       m_psLevelStats.ps_iScore -= _iPenalty * m_psLevelStats.ps_iDeaths;
 	  m_psGameStats.ps_iScore -= _iPenalty * m_psLevelStats.ps_iDeaths;
+      if (st_iKillStreak > st_iMaxKillStreak)
+      {
+          st_iMaxKillStreak = st_iKillStreak;
+      }
+      st_iKillStreak = 0;
+      st_iMostScore = max(st_iMostScore, st_iLifeScore);
+      st_iLifeScore = 0;
       m_tmLastDeath = _pTimer->CurrentTick();
     // if not in cooperative, and not single player
     } else {
@@ -7468,7 +7493,8 @@ procedures:
         CheckHighScore();
 
         // [Cecil] Combo mode
-        if (eScore.bEnemy && GetSP()->sp_fComboTime > 0.0f) {
+        if (eScore.bEnemy && GetSP()->sp_fComboTime > 0.0f) 
+        {
           // enemy combos
           if (GetSP()->sp_bSinglePlayer || GetSP()->sp_bCooperative) {
             if (m_iCombo < 100 || GetSP()->sp_iAMPOptions & AMP_UNLIMITCOMBO) {
@@ -7490,6 +7516,7 @@ procedures:
             }
           }
         }
+        st_iLifeScore += eScore.iPoints;
         resume;
       }
 
@@ -7502,6 +7529,7 @@ procedures:
       on (EKilledEnemy) : {
         m_psLevelStats.ps_iKills += 1;
         m_psGameStats.ps_iKills += 1;
+        st_iKillStreak += 1; //is this even called in coop or just fragmatch/scoremaqtch?
         resume;
       }
 
