@@ -898,6 +898,8 @@ properties:
  232 INDEX st_iLifeScore = 0,
  233 INDEX st_iMostScore = 0,
 
+ 260 INDEX m_iMedkit = 0,
+
 
 {
   ShellLaunchData ShellLaunchData_array; // array of data describing flying empty shells
@@ -4367,7 +4369,7 @@ functions:
     // [Cecil] TODO: Call PlayerInventory and check if it's only knives selected
     // enable faster moving if holding knife in DM
     if (GetWeapon(0)->GetCurrent() == WEAPON_KNIFE) { //&& !GetSP()->sp_bCooperative) {
-      vTranslation *= 1.3f;
+      vTranslation *= 1.44f; //1.3f was kinda too small, todo: make this configurable too
     }
 
     // [Cecil] Speed multipliers
@@ -6117,7 +6119,7 @@ functions:
 		if (m_aiScores[i] <= 0.1f) {
 		  m_aiScores[i] = fScore;
           m_aiScoreTicks[i] = SCORE_DISPLAY_TICKS;
-          m_aiScoreColors[i] = FloatToColor(fScore, 25000.0f, 0xFF, 0xFF);
+          m_aiScoreColors[i] = FloatToColor(fScore, 20000.0f, 0xFF, 0xF8);
           //i was under the impression the game has 20tps, 100ticks = 5s, but seems that it's not? it disappears instantly
 		  return;
 		}
@@ -6138,7 +6140,7 @@ functions:
       }
 	  m_aiScores[i_lowest] = fScore;
 	  m_aiScoreTicks[i_lowest] = SCORE_DISPLAY_TICKS;
-      m_aiScoreColors[i_lowest] = FloatToColor(fScore, 25000.0f, 0xFF, 0xFF);
+      m_aiScoreColors[i_lowest] = FloatToColor(fScore, 20000.0f, 0xFF, 0xF8);
       //todo: color based on score amount from 100k to 1, prob just yellow and multiply appropriate hex part by fscore/100000.0f
       return;
   };

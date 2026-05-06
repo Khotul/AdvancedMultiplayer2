@@ -43,6 +43,7 @@
 #define MAX_ELECTRICITY   INDEX(800)
 #define MAX_IRONBALLS     INDEX(30)
 #define MAX_SNIPERBULLETS INDEX(200)
+#define MAX_RAY           INDEX(800)
 
 // Bit shifters for ammo
 #define AMMO_BULLETS       0
@@ -53,9 +54,10 @@
 #define AMMO_ELECTRICITY   5
 #define AMMO_IRONBALLS     7
 #define AMMO_SNIPERBULLETS 8
+#define AMMO_RAY           9
 
 // [Cecil] Ammo bits in order
-static const INDEX _aiTakeAmmoBits[8] = {
+static const INDEX _aiTakeAmmoBits[9] = {
   AMMO_SHELLS,
   AMMO_BULLETS,
   AMMO_ROCKETS,
@@ -64,6 +66,7 @@ static const INDEX _aiTakeAmmoBits[8] = {
   AMMO_SNIPERBULLETS,
   AMMO_ELECTRICITY,
   AMMO_IRONBALLS,
+  AMMO_RAY,
 };
 
 #define BLOOD_SPILL_RED RGBAToColor(250,20,20,255)
@@ -78,6 +81,7 @@ static const INDEX _aiTakeAmmoBits[8] = {
 #define AV_IRONBALLS     INDEX(700)
 #define AV_NAPALM        INDEX(200)
 #define AV_SNIPERBULLETS INDEX(200)
+#define AV_RAY           INDEX(200)
 
 // [Cecil] Mana for ammo adjustment (moved from PlayerWeapons)
 #define MANA_AMMO (0.1f)

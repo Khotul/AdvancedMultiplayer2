@@ -9,7 +9,7 @@
   "Group" : 7,
   
   "Ammo" : 7,
-  "AltAmmo": -1,
+  "AltAmmo": 9,
   
   "Models" : {
     "View" : {
@@ -35,7 +35,7 @@
   "FOV" : 70.5,
   "PosFire" : [0.2, -0.55],
   
-  "PickupAmmo" : 50,
-  "PickupAlt"  : 0,
+  "PickupAmmo" : 75,
+  "PickupAlt"  : 25,
   "Mana" : 15.0,
 }

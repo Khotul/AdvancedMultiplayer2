@@ -22,7 +22,8 @@ event EAmmoPackItem {
   INDEX iElectricity,                
   INDEX iIronBalls,                
 //  INDEX iNukeBalls,     
-  INDEX iSniperBullets,           
+  INDEX iSniperBullets,   
+  INDEX iRay,
 };
 
 class CAmmoPack : CItem {
@@ -40,6 +41,7 @@ properties:
  15 INDEX m_iElectricity   "7. Electricity"    'E' = MAX_ELECTRICITY,
  16 INDEX m_iIronBalls     "8. Iron balls"     'I' = MAX_IRONBALLS,
  17 INDEX m_iSniperBullets "6. Sniper bullets" 'N' = MAX_SNIPERBULLETS,
+ 18 INDEX m_iRay           "9. Ray"            'R' = MAX_RAY,
 
 components:
   0 class   CLASS_BASE        "Classes\\Item.ecl",
@@ -139,6 +141,7 @@ functions:
     if( m_iIronBalls != 0) {m_strDescription.PrintF("%s: Iron balls (%d)", m_strDescription, m_iIronBalls);}
 //    if( m_iNukeBalls != 0) {m_strDescription.PrintF("%s: Nuke balls (%d)", m_strDescription, m_iNukeBalls);}
     if( m_iSniperBullets != 0) {m_strDescription.PrintF("%s: Sniper bullets (%d)", m_strDescription, m_iSniperBullets);}
+    if( m_iRay != 0) {m_strDescription.PrintF("%s: Ray (%d)", m_strDescription, m_iRay);}
   }
 
   void AdjustDifficulty(void) {
@@ -181,6 +184,7 @@ procedures:
     eAmmo.iIronBalls = m_iIronBalls;
 //    eAmmo.iNukeBalls = m_iNukeBalls;
     eAmmo.iSniperBullets = m_iSniperBullets;
+	eAmmo.iRay = m_iRay;
     // if health is received
     if (epass.penOther->ReceiveItem(eAmmo)) {
       // play the pickup sound
@@ -204,6 +208,7 @@ procedures:
     m_iIronBalls = Clamp( m_iIronBalls, INDEX(0), MAX_IRONBALLS);
 //    m_iNukeBalls = Clamp( m_iNukeBalls, INDEX(0), MAX_NUKEBALLS);
     m_iSniperBullets = Clamp( m_iSniperBullets, INDEX(0), MAX_SNIPERBULLETS);
+	m_iRay = Clamp( m_iRay, INDEX(0), MAX_RAY);
 
     Initialize();     // initialize base class
     StartModelAnim(ITEMHOLDER_ANIM_MEDIUMOSCILATION, AOF_LOOPING|AOF_NORESTART);

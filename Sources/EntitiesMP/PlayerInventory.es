@@ -38,6 +38,7 @@ static const INDEX _aiAmmoSetTypes[] = {
   -1, // AIT_BACKPACK (invalid)
    5, // AIT_NAPALM
    6, // AIT_SNIPERBULLETS
+   9, // AIT_RAY
 };
 
 static const INDEX _aiAmmoPickupMinimum[] = {
@@ -53,6 +54,7 @@ static const INDEX _aiAmmoPickupMinimum[] = {
   0, // AIT_BACKPACK (invalid)
   200, // AIT_NAPALM
   16, // AIT_SNIPERBULLETS
+  50, // AIT_RAY
 };
 
 // Currently selected weapon set
@@ -1034,6 +1036,10 @@ functions:
         m_aAmmo[4].iAmount += 1; // adds 1 grenade upon picking up shells
         //4 is _aiAmmoSetTypes[AIT_GRENADES]
     }
+    else if (Eai.EaitType == AIT_ELECTRICITY)
+    {
+        m_aAmmo[9].iAmmounth += 50; // adds 50 ghostbuster rays upon picking up electricity
+    }
 
     //CTString _strPickup = paAmmo.pasAmmoStruct->strPickup;
     //GetPlayer()->ItemPicked(TRANS(_strPickup), iAmmo); //fix no translation on ammo pickup
@@ -1063,7 +1069,7 @@ functions:
     EAmmoPackItem &eapi = (EAmmoPackItem &)ee;
 
     // [Cecil] Default ammo set
-    INDEX aiSet[8];
+    INDEX aiSet[9];
     aiSet[0] = eapi.iShells;
     aiSet[1] = eapi.iBullets;
     aiSet[2] = eapi.iRockets;
@@ -1072,6 +1078,7 @@ functions:
     aiSet[5] = eapi.iSniperBullets;
     aiSet[6] = eapi.iElectricity;
     aiSet[7] = eapi.iIronBalls;
+    aiSet[8] = eapi.iRay;
 
     // [Cecil] Check if lacking some ammo
     BOOL bLacking = FALSE;
@@ -1088,7 +1095,7 @@ functions:
 
     if (bLacking) {
       // [Cecil] Add ammo
-      for (INDEX iAdd = 1; iAdd <= 8; iAdd++) {
+      for (INDEX iAdd = 1; iAdd <= 9; iAdd++) {
           if (iAdd == 6)
           {
               m_aAmmo[iAdd].iAmount += ceil(FLOAT(aiSet[iAdd-1]) * 3.0f * AmmoMul()); //sloppy code, if sniperbullets multiply by 3

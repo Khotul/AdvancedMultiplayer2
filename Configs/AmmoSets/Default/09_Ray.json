@@ -1,0 +1,7 @@
+{
+  "Name" : "Ray",
+  "Icon" : "TexturesMP\Interface\AmElectricity.tex",
+  
+  "Ammo" : 800,
+  "Mana" : 250.0,
+}

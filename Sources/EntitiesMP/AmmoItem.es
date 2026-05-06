@@ -30,7 +30,8 @@ enum AmmoItemType {
   8 AIT_SERIOUSPACK   "SeriousPack - don't use",
   9 AIT_BACKPACK      "BackPack - don't use",
  10 AIT_NAPALM        "Napalm",
- 11 AIT_SNIPERBULLETS "Sniper bullets"
+ 11 AIT_SNIPERBULLETS "Sniper bullets",
+ 12 AIT_RAY           "Ray"
 };
 
 // event for sending through receive item
@@ -41,7 +42,7 @@ event EAmmoItem {
 
 %{
 // [Cecil] Random type table
-static const AmmoItemType _aeRandomAmmoTypes[8] = {
+static const AmmoItemType _aeRandomAmmoTypes[9] = {
   AIT_SHELLS,
   AIT_BULLETS,
   AIT_ROCKETS,
@@ -50,6 +51,7 @@ static const AmmoItemType _aeRandomAmmoTypes[8] = {
   AIT_IRONBALLS,
   AIT_NAPALM,
   AIT_SNIPERBULLETS,
+  AIT_RAY
 };
 %}
 
@@ -216,6 +218,9 @@ functions:
       case AIT_SNIPERBULLETS:
         Particles_Spiral(this, 1.5f*0.75, 1.25f*0.75, PT_STAR04, 6);
         break;
+      case AIT_RAY:
+        Particles_Spiral(this, 1.5f*0.75, 1.125f*0.75, PT_STAR04, 6);
+        break;
     }
   };
 
@@ -264,6 +269,10 @@ functions:
       case AIT_SNIPERBULLETS:
         pes->es_strName = "Sniper bullets"; 
         pes->es_fValue = m_fValue*AV_SNIPERBULLETS;
+        break;
+      case AIT_RAY:
+        pes->es_strName = "Ray"; 
+        pes->es_fValue = m_fValue*AV_RAY;
         break;
     }
     pes->es_iScore = 0;//m_iScore;
@@ -334,6 +343,18 @@ functions:
         m_fValue = 75.0f;
         m_fRespawnTime = (m_fCustomRespawnTime > 0) ? m_fCustomRespawnTime : 30.0f; 
         m_strDescription.PrintF("Electricity: %d", (int)fValue);
+        // set appearance
+        AddItem(MODEL_ELECTRICITY, TEXTURE_ELECTRICITY, TEXTURE_EL_EFFECT, TEXTURE_EL_EFFECT, 0);
+        AddItemAttachment(ELECTRICITY_ATTACHMENT_EFFECT1, MODEL_EL_EFFECT, TEXTURE_EL_EFFECT, 0, 0, 0);
+        AddItemAttachment(ELECTRICITY_ATTACHMENT_EFFECT2, MODEL_EL_EFFECT, TEXTURE_EL_EFFECT, 0, 0, 0);
+        AddItemAttachment(ELECTRICITY_ATTACHMENT_EFFECT3, MODEL_EL_EFFECT2,TEXTURE_EL_EFFECT, 0, 0, 0);
+        AddFlare(MODEL_FLARE, TEXTURE_FLARE, FLOAT3D(0,0.6f,0), FLOAT3D(3,3,0.8f) );
+        StretchItem(FLOAT3D(0.75f, 0.75f, 0.75f));
+        break;
+      case AIT_RAY:
+        m_fValue = 50.0f;
+        m_fRespawnTime = (m_fCustomRespawnTime > 0) ? m_fCustomRespawnTime : 30.0f; 
+        m_strDescription.PrintF("Ray: %d", (int)fValue);
         // set appearance
         AddItem(MODEL_ELECTRICITY, TEXTURE_ELECTRICITY, TEXTURE_EL_EFFECT, TEXTURE_EL_EFFECT, 0);
         AddItemAttachment(ELECTRICITY_ATTACHMENT_EFFECT1, MODEL_EL_EFFECT, TEXTURE_EL_EFFECT, 0, 0, 0);
